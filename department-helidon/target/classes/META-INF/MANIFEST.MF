@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: kubel
+Build-Jdk: 17.0.5
+Main-Class: io.helidon.microprofile.cdi.Main
+Created-By: Maven Integration for Eclipse
+
