@@ -35,6 +35,17 @@ spring:
     xa-rac-active: false
     xa-weblogic-transaction-support: false
     xa-weblogic-namespace: weblogic
+    
+## 임시 테스트를 위한 datasource 생성
+  datasource:
+    jdbc-url: "jdbc:oracle:thin:@172.30.1.17:1521/TESTDB"
+    username: "testuser"
+    password: "new1234!"
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 30000
 
 ## For connecting to Autonomous Database (ATP) refer https://www.oracle.com/database/technologies/getting-started-using-jdbc.html
 ## Provide the database URL, database username and database password (as shown in the example values)
@@ -55,6 +66,12 @@ departmentDataSource:
       max-pool-size: 30
       data-source-name: deptxadatasource
 
-
 departmentOneEndpoint: "http://172.30.1.17:8081"
 departmentTwoEndpoint: "http://localhost:8082"
+
+
+mybatis:
+   #mapper-locations: classpath:mappers/*.xml 
+   type-aliases-package: com.oracle.mtm.sample.data
+   configuration:
+      map-underscore-to-camel-case: true

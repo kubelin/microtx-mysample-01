@@ -1,0 +1,5 @@
+Sun Jul 28 00:56:24 2024: java -jar ./teller-spring/target/teller-spring.jar --spring.profiles.active=test
+Sun Jul 28 01:06:42 2024: java -jar ./teller-spring/target/teller-spring.jar --server.port=9999
+Sun Jul 28 01:10:11 2024: java -jar ./department-spring/target/department.jar --spring.profiles.active=test
+Sun Jul 28 01:14:57 2024: java -jar ./department-spring/target/department.jar --server.port=9999
+Sun Jul 28 01:19:42 2024: java -jar ./department-spring/target/department.jar --server.port=9999
