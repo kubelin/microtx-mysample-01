@@ -18,70 +18,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.oracle.mtm.sample.data;
+package com.oracle.mtm.sample;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.oracle.mtm.sample.entity.Account;
+@SpringBootApplication
+@MapperScan(basePackages = "com.oracle.mtm.sample.data")
+public class DepartmentSpringApplication {
 
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
-
-/**
- * Service that connects to the accounts database and provides methods to interact with the account
- */
-@Slf4j
-//@Component
-//@RequestScope
-@Service("MyAccountService")
-public class MyAccountService implements IAccountService {
-	@Autowired
-	private AccountMapper accountMapper;
-
-	@Override
-	public Account accountDetails(String accountId) {
-		return accountMapper.getAccountById(accountId);
+	public static void main(String[] args) {
+		SpringApplication.run(DepartmentSpringApplication.class, args);
 	}
 
-	@Override
-	public boolean withdraw(String accountId, double amount) {
-		//		try {
-		//			TimeUnit.SECONDS.sleep(2);
-		//		} catch (InterruptedException e) {
-		//			Thread.currentThread().interrupt();
-		//			return false;
-		//		}
-
-		return accountMapper.withdraw(accountId, amount) > 0;
-	}
-
-	@Override
-	@Transactional
-	public boolean deposit(String accountId, double amount) {
-		try {
-			int affectedRows = accountMapper.deposit(accountId, amount);
-			if (affectedRows > 0) {
-				log.info("deposit Response save history : \n");
-				accountMapper.saveTransactionHistory(accountId, "deposit", amount);
-				log.info("deposit Response commit : \n");
-				return true;
-			} else {
-				log.info("deposit Response rollback : \n");
-				return false;
-			}
-		} catch (Exception e) {
-			log.error("Error during deposit", e);
-			throw e;
-		}
-	}
-
-	@Override
-	public double getBalance(String accountId) {
-		Double balance = accountMapper.getBalance(accountId);
-		if (balance == null) {
-			throw new IllegalArgumentException("Account not found");
-		}
-		return balance;
-	}
 }

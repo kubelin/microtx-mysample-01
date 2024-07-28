@@ -20,68 +20,47 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 */
 package com.oracle.mtm.sample.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.oracle.mtm.sample.entity.Account;
 
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
- * Service that connects to the accounts database and provides methods to interact with the account
+ * Interface for account database service
  */
-@Slf4j
-//@Component
-//@RequestScope
-@Service("MyAccountService")
-public class MyAccountService implements IAccountService {
-	@Autowired
-	private AccountMapper accountMapper;
+public interface IAccountService {
 
-	@Override
-	public Account accountDetails(String accountId) {
-		return accountMapper.getAccountById(accountId);
-	}
+    /**
+     * Get account details persisted in the database
+     * @param accountId Account identity
+     * @return Returns the account details associated with the account
+     * @throws SQLException
+     */
+    Account accountDetails(String accountId) throws SQLException;
 
-	@Override
-	public boolean withdraw(String accountId, double amount) {
-		//		try {
-		//			TimeUnit.SECONDS.sleep(2);
-		//		} catch (InterruptedException e) {
-		//			Thread.currentThread().interrupt();
-		//			return false;
-		//		}
+    /**
+     * Withdraw amount from an account
+     * @param accountId Account identity
+     * @param amount The amount to be withdrawn from the account
+     * @return If the withdrawal was successful
+     * @throws SQLException
+     */
+    boolean withdraw(String accountId, double amount) throws SQLException;
 
-		return accountMapper.withdraw(accountId, amount) > 0;
-	}
+    /**
+     * Deposit amount to an account
+     * @param accountId Account identity
+     * @param amount The amount to be deposited into the account
+     * @return If the deposit was successful
+     * @throws SQLException
+     */
+    boolean deposit(String accountId, double amount) throws SQLException;
 
-	@Override
-	@Transactional
-	public boolean deposit(String accountId, double amount) {
-		try {
-			int affectedRows = accountMapper.deposit(accountId, amount);
-			if (affectedRows > 0) {
-				log.info("deposit Response save history : \n");
-				accountMapper.saveTransactionHistory(accountId, "deposit", amount);
-				log.info("deposit Response commit : \n");
-				return true;
-			} else {
-				log.info("deposit Response rollback : \n");
-				return false;
-			}
-		} catch (Exception e) {
-			log.error("Error during deposit", e);
-			throw e;
-		}
-	}
-
-	@Override
-	public double getBalance(String accountId) {
-		Double balance = accountMapper.getBalance(accountId);
-		if (balance == null) {
-			throw new IllegalArgumentException("Account not found");
-		}
-		return balance;
-	}
+    /**
+     * Get balance amount from the account
+     * @param accountId Account identity
+     * @return Returns the balance associated with the account
+     * @throws SQLException
+     */
+    double getBalance(String accountId) throws SQLException;
 }

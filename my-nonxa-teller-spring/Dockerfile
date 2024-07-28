@@ -17,44 +17,23 @@
 # PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 # CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-server:
-  port : 8082
+# 1st stage, build the app
+FROM maven:3.8.3-openjdk-17 as build
 
-spring:
-  microtx:
-    coordinator-url: http://172.30.1.16:9000/api/v1
-    participant-url: http://172.30.1.93:8082
-    propagation-active: true
-    http-client-connection-pool-size: 60
-    xa-transaction-timeout: 60000
-    xa-xa-support: true
-    xa-llr-support: false
-    xa-lrc-support: false
-    xa-promotable-active: false
-    xa-rac-active: false
-    xa-weblogic-transaction-support: false
-    xa-weblogic-namespace: weblogic
+WORKDIR /app
 
-# resttemplate설정을 위한 예시
-rest:
-  connection:
-    max-per-route: 10
-    max-total: 20
-    timeout: 5000  # 밀리초 단위
-  response:
-    timeout: 10000  # 밀리초 단위
+COPY pom.xml .
+COPY src src
+RUN mvn package -DskipTests
+RUN echo "done!"
 
-# 추가적인 설정들을 위한 예시
-http:
-  client:
-    connection-timeout: 3000  # 밀리초 단위
-    socket-timeout: 5000  # 밀리초 단위
-    request-timeout: 5000  # 밀리초 단위
-    max-conn-total: 100
-    max-conn-per-route: 20
-    default-keep-alive-time: 20000  # 밀리초 단위
+# 2nd stage, build the runtime image
+FROM openjdk:17.0.1-jdk-slim
+WORKDIR /app
 
-#departmentOneEndpoint: "http://172.30.1.17:9999"
-#departmentTwoEndpoint: "http://172.30.1.39:9998"
-departmentOneEndpoint: "http://172.30.1.93:9999"
-departmentTwoEndpoint: "http://172.30.1.93:9998"
+# Copy the binary built in the 1st stage
+COPY --from=build /app/target/teller-spring.jar ./
+
+CMD ["java", "-jar", "teller-spring.jar"]
+
+EXPOSE 8080
