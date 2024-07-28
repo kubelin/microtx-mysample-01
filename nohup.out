@@ -1,0 +1,97 @@
+01:14:58,029 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.4.14
+01:14:58,031 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Here is a list of configurators discovered as a service, by rank: 
+01:14:58,031 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+01:14:58,031 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+01:14:58,031 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+01:14:58,038 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:14:58,038 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+01:14:58,040 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+01:14:58,048 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+01:14:58,049 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+01:14:58,049 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 9 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:14:58,049 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+01:14:58,051 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+01:14:58,052 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+01:14:58,052 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
+01:14:58,052 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:14:58,052 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Trying to configure with ch.qos.logback.classic.BasicConfigurator
+01:14:58,054 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - Constructed configurator of type class ch.qos.logback.classic.BasicConfigurator
+01:14:58,054 |-INFO in ch.qos.logback.classic.BasicConfigurator@78365cfa - Setting up default configuration.
+01:14:58,083 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7ac2e39b - ch.qos.logback.classic.BasicConfigurator.configure() call lasted 29 milliseconds. ExecutionStatus=NEUTRAL
+01:14:58,474 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@64a8c844 - URL [jar:nested:/C:/Workspace/microtx-mysample-01/department-spring/target/department.jar/!BOOT-INF/classes/!/logback-spring.xml] is not of type file
+01:14:58,505 |-INFO in ch.qos.logback.core.joran.util.ConfigurationWatchListUtil@3f6db3fb - Adding [jar:nested:/C:/Workspace/microtx-mysample-01/department-spring/target/department.jar/!BOOT-INF/lib/spring-boot-3.2.3.jar!/org/springframework/boot/logging/logback/defaults.xml] to configuration watch list.
+01:14:58,505 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@64a8c844 - URL [jar:nested:/C:/Workspace/microtx-mysample-01/department-spring/target/department.jar/!BOOT-INF/lib/spring-boot-3.2.3.jar!/org/springframework/boot/logging/logback/defaults.xml] is not of type file
+01:14:58,507 |-INFO in ch.qos.logback.core.joran.action.ConversionRuleAction - registering conversion word clr with class [org.springframework.boot.logging.logback.ColorConverter]
+01:14:58,507 |-INFO in ch.qos.logback.core.joran.action.ConversionRuleAction - registering conversion word correlationId with class [org.springframework.boot.logging.logback.CorrelationIdConverter]
+01:14:58,507 |-INFO in ch.qos.logback.core.joran.action.ConversionRuleAction - registering conversion word wex with class [org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter]
+01:14:58,507 |-INFO in ch.qos.logback.core.joran.action.ConversionRuleAction - registering conversion word wEx with class [org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter]
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.catalina.startup.DigesterFactory] to ERROR
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating ERROR level on Logger[org.apache.catalina.startup.DigesterFactory] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.catalina.util.LifecycleBase] to ERROR
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating ERROR level on Logger[org.apache.catalina.util.LifecycleBase] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.coyote.http11.Http11NioProtocol] to WARN
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating WARN level on Logger[org.apache.coyote.http11.Http11NioProtocol] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.sshd.common.util.SecurityUtils] to WARN
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating WARN level on Logger[org.apache.sshd.common.util.SecurityUtils] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.tomcat.util.net.NioSelectorPool] to WARN
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating WARN level on Logger[org.apache.tomcat.util.net.NioSelectorPool] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.eclipse.jetty.util.component.AbstractLifeCycle] to ERROR
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating ERROR level on Logger[org.eclipse.jetty.util.component.AbstractLifeCycle] onto the JUL framework
+01:14:58,535 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.hibernate.validator.internal.util.Version] to WARN
+01:14:58,535 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating WARN level on Logger[org.hibernate.validator.internal.util.Version] onto the JUL framework
+01:14:58,536 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.springframework.boot.actuate.endpoint.jmx] to WARN
+01:14:58,536 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating WARN level on Logger[org.springframework.boot.actuate.endpoint.jmx] onto the JUL framework
+01:14:58,536 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [Console]
+01:14:58,536 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+01:14:58,550 |-WARN in ch.qos.logback.core.ConsoleAppender[Console] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+01:14:58,550 |-WARN in ch.qos.logback.core.ConsoleAppender[Console] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+01:14:58,550 |-WARN in ch.qos.logback.core.ConsoleAppender[Console] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+01:14:58,550 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ConsoleMTX]
+01:14:58,550 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+01:14:58,551 |-WARN in ch.qos.logback.core.ConsoleAppender[ConsoleMTX] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+01:14:58,551 |-WARN in ch.qos.logback.core.ConsoleAppender[ConsoleMTX] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+01:14:58,551 |-WARN in ch.qos.logback.core.ConsoleAppender[ConsoleMTX] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+01:14:58,551 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.oracle] to DEBUG
+01:14:58,551 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating DEBUG level on Logger[com.oracle] onto the JUL framework
+01:14:58,554 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [com.oracle] to false
+01:14:58,554 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ConsoleMTX] to Logger[com.oracle]
+01:14:58,554 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+01:14:58,554 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@52de51b6 - Propagating INFO level on Logger[ROOT] onto the JUL framework
+01:14:58,555 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [Console] to Logger[ROOT]
+01:14:58,555 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@18c5069b - End of configuration.
+01:14:58,555 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@3a0d172f - Registering current configuration as safe fallback point
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2024-07-28 01:14:58.674  INFO 46520 --- [           main] c.o.m.s.DepartmentSpringApplication      :  : Starting DepartmentSpringApplication v24.2.1 using Java 21.0.2 with PID 46520 (C:\Workspace\microtx-mysample-01\department-spring\target\department.jar started by kubel in C:\Workspace\microtx-mysample-01)
+2024-07-28 01:14:58.676 DEBUG 46520 --- [           main] c.o.m.s.DepartmentSpringApplication      :  : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-07-28 01:14:58.676  INFO 46520 --- [           main] c.o.m.s.DepartmentSpringApplication      :  : No active profile set, falling back to 1 default profile: "default"
+2024-07-28 01:14:59.926  INFO 46520 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  :  : Tomcat initialized with port 9999 (http)
+2024-07-28 01:14:59.935  INFO 46520 --- [           main] o.apache.catalina.core.StandardService   :  : Starting service [Tomcat]
+2024-07-28 01:14:59.936  INFO 46520 --- [           main] o.apache.catalina.core.StandardEngine    :  : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-07-28 01:14:59.963  INFO 46520 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       :  : Initializing Spring embedded WebApplicationContext
+2024-07-28 01:14:59.964  INFO 46520 --- [           main] w.s.c.ServletWebServerApplicationContext :  : Root WebApplicationContext: initialization completed in 1235 ms
+2024-07-28 01:15:00.076  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Propagation Active : true
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn LLR support : false
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn LRC support : false
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn promotable enabled : false
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn RAC enabled : false
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn wls txn support : false
+2024-07-28 01:15:00.079  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn XA support : true
+2024-07-28 01:15:00.080  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Coordinator Url : http://172.30.1.16:9000/api/v1
+2024-07-28 01:15:00.080  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Http Client Connection pool size : 60
+2024-07-28 01:15:00.080  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Participant Url : http://172.30.1.93:8082
+2024-07-28 01:15:00.080  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn LLR delete commit record interval : 720000
+2024-07-28 01:15:00.081  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : XA resource manager Id : 174A5FF2-D8B1-47B0-AF09-DA5AFECA2F61
+2024-07-28 01:15:00.081  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn timeout : 60000
+2024-07-28 01:15:00.081  INFO 46520 --- [           main] c.o.m.s.MicroTxConfigProperties          :  : Xa txn weblogic namespace : weblogic
+2024-07-28 01:15:00.366  INFO 46520 --- [           main] c.o.m.sample.resource.AccountsResource   :  : XADataSourceConfig: XADataSource created
+2024-07-28 01:15:01.083  INFO 46520 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  :  : Tomcat started on port 9999 (http) with context path ''
+2024-07-28 01:15:01.104  INFO 46520 --- [           main] c.o.m.s.DepartmentSpringApplication      :  : Started DepartmentSpringApplication in 2.89 seconds (process running for 3.361)

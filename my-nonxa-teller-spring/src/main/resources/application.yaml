@@ -21,20 +21,6 @@ server:
   port : 8082
 
 spring:
-  microtx:
-    coordinator-url: http://172.30.1.16:9000/api/v1
-    participant-url: http://172.30.1.93:8082
-    propagation-active: true
-    http-client-connection-pool-size: 60
-    xa-transaction-timeout: 60000
-    xa-xa-support: true
-    xa-llr-support: false
-    xa-lrc-support: false
-    xa-promotable-active: false
-    xa-rac-active: false
-    xa-weblogic-transaction-support: false
-    xa-weblogic-namespace: weblogic
-
 # resttemplate설정을 위한 예시
 rest:
   connection:

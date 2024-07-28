@@ -60,11 +60,6 @@
 			<version>${mybatis.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.microtx</groupId>
-			<artifactId>microtx-spring-boot-starter</artifactId>
-			<version>24.2.1</version>
-		</dependency>
-		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-annotations</artifactId>
 			<version>2.2.12</version>

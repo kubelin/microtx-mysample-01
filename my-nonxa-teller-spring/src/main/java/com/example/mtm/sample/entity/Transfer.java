@@ -18,18 +18,59 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.oracle.mtm.sample;
+package com.example.mtm.sample.entity;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-@MapperScan(basePackages = "com.oracle.mtm.sample.data")
-public class DepartmentSpringApplication {
+import io.swagger.v3.oas.annotations.media.Schema;
 
-	public static void main(String[] args) {
-		SpringApplication.run(DepartmentSpringApplication.class, args);
-	}
+@Schema(name = "Transfer")
+public class Transfer {
+    @Schema(required = true, description = "The remitter's account Identity")
+    String from;
+    @Schema(required = true, description = "The beneficiary's account Identity")
+    String to;
+    @Schema(required = true, description = "The transfer amount")
+    double amount;
+    public Transfer(){
+    }
 
+    public Transfer(String from, String to, double amount) {
+        this.from = from;
+        this.to = to;
+        this.amount = amount;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

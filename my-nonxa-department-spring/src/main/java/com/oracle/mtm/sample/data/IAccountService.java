@@ -18,18 +18,49 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.oracle.mtm.sample;
+package com.oracle.mtm.sample.data;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.oracle.mtm.sample.entity.Account;
 
-@SpringBootApplication
-@MapperScan(basePackages = "com.oracle.mtm.sample.data")
-public class DepartmentSpringApplication {
+import java.sql.Connection;
+import java.sql.SQLException;
 
-	public static void main(String[] args) {
-		SpringApplication.run(DepartmentSpringApplication.class, args);
-	}
+/**
+ * Interface for account database service
+ */
+public interface IAccountService {
 
+    /**
+     * Get account details persisted in the database
+     * @param accountId Account identity
+     * @return Returns the account details associated with the account
+     * @throws SQLException
+     */
+    Account accountDetails(String accountId) throws SQLException;
+
+    /**
+     * Withdraw amount from an account
+     * @param accountId Account identity
+     * @param amount The amount to be withdrawn from the account
+     * @return If the withdrawal was successful
+     * @throws SQLException
+     */
+    boolean withdraw(String accountId, double amount) throws SQLException;
+
+    /**
+     * Deposit amount to an account
+     * @param accountId Account identity
+     * @param amount The amount to be deposited into the account
+     * @return If the deposit was successful
+     * @throws SQLException
+     */
+    boolean deposit(String accountId, double amount) throws SQLException;
+
+    /**
+     * Get balance amount from the account
+     * @param accountId Account identity
+     * @return Returns the balance associated with the account
+     * @throws SQLException
+     */
+    double getBalance(String accountId) throws SQLException;
 }

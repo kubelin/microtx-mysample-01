@@ -26,7 +26,6 @@ import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -48,14 +47,13 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @Component
 @RestController
-@RequestMapping("/transfers")
+@RequestMapping("/nonxa-transfers")
 @OpenAPIDefinition(info = @Info(title = "Amount Transfer endpoint", version = "1.0"))
 @RequestScope
-public class TransferResource {
-	private static final Logger LOG = LoggerFactory.getLogger(TransferResource.class);
+public class TransferNonXAResource {
+	private static final Logger LOG = LoggerFactory.getLogger(TransferNonXAResource.class);
 	@Autowired
-	@Qualifier("MicroTxXaRestTemplate")
-	RestTemplate restTemplate;
+	RestTemplate basicRestTemplate;
 
 	@Value("${departmentOneEndpoint}")
 	String departmentOneEndpoint;
@@ -100,14 +98,14 @@ public class TransferResource {
 	 */
 	private ResponseEntity<String> withdraw(double amount, String accountId) throws URISyntaxException {
 		URI departmentUri = getDepartmetnOneTarget()
-			.path("/accounts")
+			.path("/loadtest")
 			.path("/" + accountId)
 			.path("/withdraw")
 			.queryParam("amount", amount)
 			.build()
 			.toUri();
 
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity(departmentUri, null, String.class);
+		ResponseEntity<String> responseEntity = basicRestTemplate.postForEntity(departmentUri, null, String.class);
 		LOG.info("Withdraw Response: \n" + responseEntity.getBody());
 		return responseEntity;
 	}
@@ -120,14 +118,14 @@ public class TransferResource {
 	 */
 	private ResponseEntity<String> deposit(double amount, String accountId) throws URISyntaxException {
 		URI departmentUri = getDepartmentTwoTarget()
-			.path("/accounts")
+			.path("/loadtest")
 			.path("/" + accountId)
 			.path("/deposit")
 			.queryParam("amount", amount)
 			.build()
 			.toUri();
 
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity(departmentUri, null, String.class);
+		ResponseEntity<String> responseEntity = basicRestTemplate.postForEntity(departmentUri, null, String.class);
 		LOG.info("Deposit Response: \n" + responseEntity.getBody());
 		return responseEntity;
 	}

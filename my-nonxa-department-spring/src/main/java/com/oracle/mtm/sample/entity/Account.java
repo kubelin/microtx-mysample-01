@@ -18,18 +18,55 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.oracle.mtm.sample;
+package com.oracle.mtm.sample.entity;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@SpringBootApplication
-@MapperScan(basePackages = "com.oracle.mtm.sample.data")
-public class DepartmentSpringApplication {
+@Schema(name = "Account")
+public class Account {
+    @Schema(required = true, description = "Account identity")
+    String accountId;
+    @Schema(required = true, description = "Account name")
+    String name;
+    @Schema(required = true, description = "Amount associated with the account")
+    double amount;
 
-	public static void main(String[] args) {
-		SpringApplication.run(DepartmentSpringApplication.class, args);
-	}
+    public Account(String accountId, String name, double amount) {
+        this.accountId = accountId;
+        this.name = name;
+        this.amount = amount;
+    }
 
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId='" + accountId + '\'' +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

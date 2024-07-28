@@ -1,0 +1,51 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.apt_generated_tests
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.gradle
+# bin 폴더 및 lib 폴더의 모든 파일 제외
+bin/*
+lib/*
+/log/errorLog.log
+.apt_generated/*
+.gradle/*
+# file 제외
+*.log
+*.bin
+*.class
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+
+## queryDsl
+/src/main/generated

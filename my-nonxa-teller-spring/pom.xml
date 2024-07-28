@@ -25,18 +25,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.3</version>
+		<version>3.1.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.oracle.mtm.sample</groupId>
-	<artifactId>department-spring</artifactId>
+	<artifactId>teller-spring</artifactId>
 	<version>24.2.1</version>
-	<name>department-spring</name>
-	<description>Demo springboot project for Microservice Transaction Management participant application</description>
+	<name>teller-spring</name>
+	<description>Demo springboot project for Microservice Transaction Management Initiator as participant application</description>
 	<properties>
 		<java.version>17</java.version>
-		<spring.version>3.2.3</spring.version>
-		<mybatis.version>3.0.3</mybatis.version>
+		<spring.version>3.1.2</spring.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,21 +47,27 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- Spring Boot Starter JDBC 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		-->
+		<!-- MyBatis Spring Boot Starter -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<!-- Spring Boot Starter AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
 			<version>${httpclient5.version}</version>
-		</dependency>
-		<!-- MyBatis -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.microtx</groupId>
-			<artifactId>microtx-spring-boot-starter</artifactId>
-			<version>24.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
@@ -73,11 +78,6 @@
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-jaxrs2</artifactId>
 			<version>2.2.12</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>21.3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
@@ -95,26 +95,14 @@
 			<version>21.3.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.database.security</groupId>
-			<artifactId>osdt_cert</artifactId>
-			<version>21.3.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>
-								spring-boot-configuration-processor
-					</artifactId>
-					<optional>true</optional>
-		</dependency>
 	</dependencies>
 	<build>
-		<finalName>department</finalName>
+		<finalName>teller-spring</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

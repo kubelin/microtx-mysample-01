@@ -18,18 +18,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.oracle.mtm.sample;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-@MapperScan(basePackages = "com.oracle.mtm.sample.data")
-public class DepartmentSpringApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(DepartmentSpringApplication.class, args);
-	}
-
-}
+CREATE USER department_spring IDENTIFIED BY <password> QUOTA UNLIMITED ON DATA;
+GRANT CREATE SESSION TO department_spring;
+ALTER SESSION SET CURRENT_SCHEMA=department_spring;
+create table accounts
+(
+    account_id VARCHAR(10) not null,
+    name VARCHAR(60) not null,
+    amount decimal(10,2) not null,
+    PRIMARY KEY (account_id)
+);
+insert into accounts values('account1', 'account1', 1000.00);
+insert into accounts values('account2', 'account2', 2000.00);
+insert into accounts values('account3', 'account3', 3000.00);
+insert into accounts values('account4', 'account4', 4000.00);
+insert into accounts values('account5', 'account5', 5000.00);
