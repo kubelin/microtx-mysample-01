@@ -17,11 +17,13 @@ import com.oracle.mtm.sample.data.IAccountService;
 import com.oracle.mtm.sample.entity.Account;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -45,6 +47,12 @@ public class LoadTestTransacttionController {
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")
 	})
 	@RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
+	@Tag(name = "account")
+	@Operation(description = "get accounts", responses = {
+		@ApiResponse(responseCode = "200", description = "Account Details", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(ref = "Account"))),
+		@ApiResponse(responseCode = "404", description = "No account found for the provided account Identity"),
+		@ApiResponse(responseCode = "500", description = "Internal Server Error")
+	})
 	public ResponseEntity<?> getAccountDetails(
 		@PathVariable("accountId")
 		String accountId) {

@@ -25,18 +25,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.oracle.mtm.sample.entity.Account;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import javax.sql.XAConnection;
-
-import com.oracle.mtm.sample.Configuration;
-import com.oracle.mtm.sample.entity.Account;
-
 import oracle.tmm.jta.common.TrmSQLConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Service that connects to the accounts database and provides methods to interact with the accounts
@@ -44,14 +41,15 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 public class AccountsService implements IAccountsService {
 
-    final static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	final static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    /**
-     * The Database Connection injected by the TMM Library. Use this connection object to execute SQLs (DMLs) within the application code.
-     */
-    @Inject
-    @TrmSQLConnection
-    private Connection connection;
+	/**
+	 * The Database Connection injected by the TMM Library.
+	 * Use this connection object to execute SQLs (DMLs) within the application code.
+	 */
+	@Inject
+	@TrmSQLConnection
+	private Connection connection;
 
     /**
      * Get account details persisted in the database

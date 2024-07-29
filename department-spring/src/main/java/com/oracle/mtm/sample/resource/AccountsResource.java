@@ -54,6 +54,41 @@ public class AccountsResource {
 	IAccountService accountService;
 
 	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Amount withdrawn from the account"),
+		@ApiResponse(responseCode = "422", description = "Amount must be greater than zero"),
+		@ApiResponse(responseCode = "422", description = "Insufficient balance in the account"),
+		@ApiResponse(responseCode = "500", description = "Internal Server Error")
+	})
+	@RequestMapping(value = "/{accountId}/custom-withdraw", method = RequestMethod.POST)
+	public ResponseEntity<?> withdrawFromOne(
+		@PathVariable("accountId") String accountId,
+		@RequestParam("amount") double amount) {
+
+		// 1. local withdraw 완료
+		// 2. remote two-helidon 호출
+		if (amount == 0) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Amount must be greater than zero");
+		}
+		try {
+			if (this.accountService.getBalance(accountId) < amount) {
+				return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Insufficient balance in the account");
+			}
+			if (this.accountService.withdraw(accountId, amount)) {
+				LOG.info(amount + " withdrawn from account: " + accountId);
+
+				// heliodn deposit 호출
+
+				return ResponseEntity.ok("Amount withdrawn from the account");
+			}
+		} catch (SQLException | IllegalArgumentException e) {
+			LOG.error(e.getLocalizedMessage());
+			return ResponseEntity.internalServerError().body(e.getLocalizedMessage());
+		}
+		return ResponseEntity.internalServerError().body("Withdraw failed");
+
+	}
+
+	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Account Details", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(ref = "Account"))),
 		@ApiResponse(responseCode = "404", description = "No account found for the provided account Identity"),
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")

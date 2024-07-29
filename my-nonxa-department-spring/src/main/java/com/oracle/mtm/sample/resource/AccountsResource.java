@@ -43,7 +43,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/accounts")
 @OpenAPIDefinition(info = @Info(title = "Accounts endpoint", version = "1.0"))
@@ -53,6 +56,7 @@ public class AccountsResource {
 	@Autowired
 	IAccountService accountService;
 
+	@Tag(name = "getAccountDetails")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Account Details", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(ref = "Account"))),
 		@ApiResponse(responseCode = "404", description = "No account found for the provided account Identity"),
@@ -74,6 +78,7 @@ public class AccountsResource {
 		}
 	}
 
+	@Tag(name = "withdraw")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Amount withdrawn from the account"),
 		@ApiResponse(responseCode = "422", description = "Amount must be greater than zero"),
@@ -102,6 +107,7 @@ public class AccountsResource {
 		return ResponseEntity.internalServerError().body("Withdraw failed");
 	}
 
+	@Tag(name = "deposit")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Amount deposited to the account"),
 		@ApiResponse(responseCode = "422", description = "Amount must be greater than zero"),

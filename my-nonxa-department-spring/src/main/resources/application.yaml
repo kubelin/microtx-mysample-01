@@ -30,6 +30,9 @@ spring:
       maximum-pool-size: 5
       minimum-idle: 1
       idle-timeout: 30000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 ## For connecting to Autonomous Database (ATP) refer https://www.oracle.com/database/technologies/getting-started-using-jdbc.html
 ## Provide the database URL, database username and database password (as shown in the example values)
@@ -59,3 +62,10 @@ mybatis:
    type-aliases-package: com.oracle.mtm.sample.data
    configuration:
       map-underscore-to-camel-case: true
+      
+      
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

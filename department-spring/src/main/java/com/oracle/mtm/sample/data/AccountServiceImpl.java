@@ -43,8 +43,8 @@ import jakarta.transaction.Transactional;
 
 @Component
 @RequestScope
-public class AccountService implements IAccountService {
-	private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
+public class AccountServiceImpl implements IAccountService {
+	private static final Logger LOG = LoggerFactory.getLogger(AccountServiceImpl.class);
 
 	@Autowired
 	@Qualifier("microTxSqlConnection")
@@ -65,7 +65,7 @@ public class AccountService implements IAccountService {
 			if (connection == null) {
 				return null;
 			}
-			String query = "SELECT * FROM accounts where account_id=?";
+			String query = "SELECT * FROM one_accounts where account_id=?";
 			statement = connection.prepareStatement(query);
 			statement.setString(1, accountId);
 
