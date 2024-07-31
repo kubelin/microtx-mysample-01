@@ -30,26 +30,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
 
 import com.oracle.mtm.sample.entity.Account;
-
-import jakarta.transaction.Transactional;
 
 /**
  * Service that connects to the accounts database and provides methods to interact with the account
  */
 
-@Component
+//@Component
+
 @RequestScope
+@Service("AccountServiceImpl")
+@Primary
 public class AccountServiceImpl implements IAccountService {
 	private static final Logger LOG = LoggerFactory.getLogger(AccountServiceImpl.class);
 
 	@Autowired
 	@Qualifier("microTxSqlConnection")
-	@Lazy
-	private Connection connection;
+	@Lazy private Connection connection;
 
 	/**
 	 * Get account details persisted in the database
@@ -92,14 +93,43 @@ public class AccountServiceImpl implements IAccountService {
 	 * @return If the withdrawal was successful
 	 * @throws SQLException
 	 */
+	//	@Transactional
 	@Override
 	public boolean withdraw(String accountId, double amount) throws SQLException {
 		String query = "UPDATE accounts SET amount=amount-? where account_id=?";
 		try (PreparedStatement statement = connection.prepareStatement(query);) {
 			statement.setDouble(1, amount);
 			statement.setString(2, accountId);
-			return statement.executeUpdate() > 0;
+			int affectedRows = statement.executeUpdate();
+
+			if (affectedRows > 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+		//		String query = "UPDATE accounts SET amount=amount-? where account_id=?";
+		//		connection.setAutoCommit(false);
+		//
+		//
+		//		try (PreparedStatement statement = connection.prepareStatement(query);) {
+		//			statement.setDouble(1, amount);
+		//			statement.setString(2, accountId);
+		//			int affectedRows = statement.executeUpdate();
+		//
+		//			if (affectedRows > 0) {
+		//				connection.commit();
+		//				return true;
+		//			} else {
+		//				connection.rollback();
+		//				return false;
+		//			}
+		//		} catch (SQLException e) {
+		//			connection.rollback();
+		//			throw e;
+		//		} finally {
+		//			connection.setAutoCommit(true);
+		//		}
 	}
 
 	/**
@@ -109,11 +139,11 @@ public class AccountServiceImpl implements IAccountService {
 	 * @return If the deposit was successful
 	 * @throws SQLException
 	 */
-	@Transactional
+	//	@Transactional
 	@Override
 	public boolean deposit(String accountId, double amount) throws SQLException {
 		String query = "UPDATE accounts SET amount=amount+? where account_id=?";
-		//		connection.setAutoCommit(false);
+		connection.setAutoCommit(false);
 
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setDouble(1, amount);
@@ -130,18 +160,18 @@ public class AccountServiceImpl implements IAccountService {
 					historyStmt.executeUpdate();
 				}
 				LOG.info("deposit Response commit : \n");
-				//				connection.commit();
+				connection.commit();
 				return true;
 			} else {
 				LOG.info("deposit Response rollback : \n");
-				//				connection.rollback();
+				connection.rollback();
 				return false;
-				}
+			}
 		} catch (SQLException e) {
-			//				connection.rollback();
+			connection.rollback();
 			throw e;
 		} finally {
-			//			connection.setAutoCommit(true);
+			connection.setAutoCommit(true);
 		}
 	}
 

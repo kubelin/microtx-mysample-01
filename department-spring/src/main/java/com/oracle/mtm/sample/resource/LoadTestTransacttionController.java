@@ -34,7 +34,7 @@ public class LoadTestTransacttionController {
 
 	@Autowired
 	public LoadTestTransacttionController(
-		@Qualifier("MyAccountService")
+		@Qualifier("MyAccountServiceImpl")
 		IAccountService accountService) {
 		this.accountService = accountService;
 	}
