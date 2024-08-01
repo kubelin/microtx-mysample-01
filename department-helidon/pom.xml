@@ -36,14 +36,17 @@
     <name>department-helidon</name>
     <description>Demo helidon project for Microservice Transaction Management participant application</description>
     <properties>
-        <mpVersion>3.3</mpVersion>
+         <mpVersion>3.3</mpVersion>
+         <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <java.version>11</java.version>
         <package>com.oracle.mtm.sample</package>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <maven.compiler.source>11</maven.compiler.source>
         <final.name>department</final.name>
         <helidonVersion>3.2.1</helidonVersion>
         <log4j-api.version>2.20.0</log4j-api.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>

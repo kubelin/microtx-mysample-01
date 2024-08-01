@@ -20,22 +20,33 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 */
 package com.oracle.mtm.sample.resource;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.mtm.sample.exception.TransferFailedException;
+import com.oracle.microtx.xa.rm.MicroTxUserTransaction;
 import com.oracle.mtm.sample.data.IAccountService;
 import com.oracle.mtm.sample.entity.Account;
+import com.oracle.mtm.sample.record.Transfer;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -43,15 +54,110 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/accounts")
 @OpenAPIDefinition(info = @Info(title = "Accounts endpoint", version = "1.0"))
 public class AccountsResource {
 	private static final Logger LOG = LoggerFactory.getLogger(AccountsResource.class);
 
+	@Autowired IAccountService accountService;
+
+	@Autowired MicroTxUserTransaction microTxUserTransaction;
+
 	@Autowired
-	IAccountService accountService;
+	public AccountsResource(
+		@Qualifier("AccountServiceImpl") IAccountService accountService) {
+		this.accountService = accountService;
+	}
+
+	@Autowired
+	@Qualifier("MicroTxXaRestTemplate") RestTemplate restTemplate;
+	@Value("${departmentTwoEndpoint}") String departmentTwoEndpoint;
+
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Amount withdrawn from the account"),
+		@ApiResponse(responseCode = "422", description = "Amount must be greater than zero"),
+		@ApiResponse(responseCode = "422", description = "Insufficient balance in the account"),
+		@ApiResponse(responseCode = "500", description = "Internal Server Error")
+	})
+	@RequestMapping(value = "/{accountId}/custom-withdraw", method = RequestMethod.POST)
+	public ResponseEntity<?> withdrawFromOne(
+		@RequestBody Transfer transferDetails) throws Exception {
+		log.info("show object  {} ", transferDetails);
+		try {
+
+			if (transferDetails.amount() == 0) {
+				return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Amount must be greater than zero");
+			}
+			if (this.accountService.getBalance(transferDetails.from()) < transferDetails.amount()) {
+				return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Insufficient balance in the account");
+			}
+			// local transaction 처리
+			// 1. local withdraw 완료
+			// microTx begin;
+			microTxUserTransaction.begin();
+			log.info(">>>> begin withdraw  from account ");
+			log.info(transferDetails.amount() + " withdrawn from account: " + transferDetails.from());
+			if (!this.accountService.withdraw(transferDetails.from(), transferDetails.amount())) {
+				LOG.error("Withdraw failed: " + transferDetails.toString());
+				// // microTx begin;
+				microTxUserTransaction.rollback();
+				throw new TransferFailedException(
+					String.format("Withdraw failed: %s ", transferDetails));
+			}
+
+			// heliodn deposit 호출
+			// 2. remote two-helidon 호출
+			log.info(">>>> begin deposit to account: ");
+			log.info(transferDetails.amount() + " deposit to account: " + transferDetails.to());
+			ResponseEntity<String> depositResponse = deposit(transferDetails.amount(), transferDetails.to());
+			if (!depositResponse.getStatusCode().is2xxSuccessful()) {
+				LOG.error("Deposit failed: " + transferDetails.toString() + "Reason: " + depositResponse.getBody());
+				// microTx begin;
+				microTxUserTransaction.rollback();
+				throw new TransferFailedException(
+					String.format("Deposit failed: %s Reason: %s ", transferDetails, depositResponse.getBody()));
+			}
+
+			// microTx commit;
+			microTxUserTransaction.commit();
+			return ResponseEntity.ok("Amount withdrawn from the account");
+		} catch (SQLException | IllegalArgumentException | ResourceAccessException e) {
+			LOG.error(">>>> System Exception " + e.getLocalizedMessage());
+			return ResponseEntity.internalServerError().body(e.getLocalizedMessage());
+		} catch (TransferFailedException e) {
+			LOG.info(">>>> TransferFailedException " + e.getLocalizedMessage());
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Send an HTTP request to the service to deposit amount into the provided account identity
+	 * @param amount The amount to be deposited
+	 * @param accountId The account Identity
+	 * @return HTTP Response from the service
+	 */
+	private ResponseEntity<String> deposit(double amount, String accountId) throws URISyntaxException {
+		URI departmentUri = getDepartmentTwoTarget()
+			.path("/accounts")
+			.path("/" + accountId)
+			.path("/deposit")
+			.queryParam("amount", amount)
+			.build()
+			.toUri();
+
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity(departmentUri, null, String.class);
+		LOG.info("Deposit Response: \n" + responseEntity.getBody());
+		return responseEntity;
+	}
+
+	private UriComponentsBuilder getDepartmentTwoTarget() {
+		return UriComponentsBuilder.fromUri(URI.create(departmentTwoEndpoint));
+	}
 
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Account Details", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(ref = "Account"))),
@@ -59,8 +165,7 @@ public class AccountsResource {
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")
 	})
 	@RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
-	public ResponseEntity<?> getAccountDetails(@PathVariable("accountId")
-	String accountId) {
+	public ResponseEntity<?> getAccountDetails(@PathVariable("accountId") String accountId) {
 		try {
 			Account account = this.accountService.accountDetails(accountId);
 			if (account == null) {
@@ -81,9 +186,7 @@ public class AccountsResource {
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")
 	})
 	@RequestMapping(value = "/{accountId}/withdraw", method = RequestMethod.POST)
-	public ResponseEntity<?> withdraw(@PathVariable("accountId")
-	String accountId, @RequestParam("amount")
-	double amount) {
+	public ResponseEntity<?> withdraw(@PathVariable("accountId") String accountId, @RequestParam("amount") double amount) {
 		if (amount == 0) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Amount must be greater than zero");
 		}
@@ -108,9 +211,7 @@ public class AccountsResource {
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")
 	})
 	@RequestMapping(value = "/{accountId}/deposit", method = RequestMethod.POST)
-	public ResponseEntity<?> deposit(@PathVariable("accountId")
-	String accountId, @RequestParam
-	double amount) {
+	public ResponseEntity<?> deposit(@PathVariable("accountId") String accountId, @RequestParam double amount) {
 		if (amount <= 0) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Amount must be greater than zero");
 		}
