@@ -23,7 +23,8 @@ departmentDataSource:
   #user: "user"
   #password: "xxxxxx"
   
-  url: "jdbc:oracle:thin:@172.30.1.39:1521/TESTDB"
+#  url: "jdbc:oracle:thin:@172.30.1.39:1521/TESTDB"
+  url: "jdbc:oracle:thin:@172.30.1.17:1521/TESTDB"
   user: "testuser"
   password: "new1234!"
   
