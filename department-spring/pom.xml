@@ -112,11 +112,11 @@
 					</artifactId>
 					<optional>true</optional>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 					<groupId>com.oracle.mtm.sample</groupId>
 					<artifactId>teller-spring</artifactId>
 					<version>24.2.1</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 	<build>
 		<finalName>department</finalName>

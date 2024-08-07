@@ -42,8 +42,8 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.mtm.sample.exception.TransferFailedException;
 import com.oracle.microtx.xa.rm.MicroTxUserTransaction;
+import com.oracle.mtm.sample.common.exception.TransferFailedException;
 import com.oracle.mtm.sample.data.IAccountService;
 import com.oracle.mtm.sample.entity.Account;
 import com.oracle.mtm.sample.record.Transfer;
