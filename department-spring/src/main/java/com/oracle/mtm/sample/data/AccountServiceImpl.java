@@ -66,7 +66,7 @@ public class AccountServiceImpl implements IAccountService {
 			if (connection == null) {
 				return null;
 			}
-			String query = "SELECT * FROM one_accounts where account_id=?";
+			String query = "SELECT * FROM accounts where account_id=?";
 			statement = connection.prepareStatement(query);
 			statement.setString(1, accountId);
 

@@ -32,8 +32,6 @@ import lombok.extern.slf4j.Slf4j;
  * Service that connects to the accounts database and provides methods to interact with the account
  */
 @Slf4j
-//@Component
-//@RequestScope
 @Service("MyAccountService")
 public class MyAccountService implements IAccountService {
 	@Autowired
@@ -52,8 +50,16 @@ public class MyAccountService implements IAccountService {
 		//			Thread.currentThread().interrupt();
 		//			return false;
 		//		}
-
-		return accountMapper.withdraw(accountId, amount) > 0;
+		int afftectedRows = accountMapper.withdraw(accountId, amount);
+		if (afftectedRows > 0) {
+			log.info("withdraw Response save history : \n");
+			accountMapper.saveTransactionHistory(accountId, "withdraw", amount);
+			log.info("withdraw Response commit : \n");
+			return true;
+		} else {
+			log.info("withdraw Response rollback : \n");
+			return false;
+		}
 	}
 
 	@Override

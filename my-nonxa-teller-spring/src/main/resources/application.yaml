@@ -20,8 +20,8 @@
 server:
   port : 8082
 
+# resttemplate설정d
 spring:
-# resttemplate설정을 위한 예시
 rest:
   connection:
     max-per-route: 10

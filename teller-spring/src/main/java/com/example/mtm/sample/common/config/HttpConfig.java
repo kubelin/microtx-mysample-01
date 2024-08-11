@@ -1,5 +1,7 @@
 package com.example.mtm.sample.common.config;
 
+import java.util.Collections;
+
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
@@ -14,6 +16,24 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * com.example.mtm.sample.common.config
+ * <p>
+ * HttpConfig
+ * build template for http protocol
+ *
+ * @author 	kubel
+ * @version
+ * @since 	2024. 8. 11.
+ *
+ * <pre>
+ * [ history of modify ]
+ *      수정일        수정자           수정내용
+ *  ----------    -----------    ---------------------------
+ *  2024. 8. 11.     kubel 		 create
+ * </pre>
+ *
+ */
 @Slf4j
 @Configuration
 public class HttpConfig {
@@ -58,7 +78,9 @@ public class HttpConfig {
 	@Bean
 	@Primary
 	public RestTemplate restTemplate(HttpComponentsClientHttpRequestFactory requestFactory) {
-		return new RestTemplate(requestFactory);
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+		restTemplate.setInterceptors(Collections.singletonList(new LoggingRequestInterceptor()));
+		return restTemplate;
 	}
 
 }
