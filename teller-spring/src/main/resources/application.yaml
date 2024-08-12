@@ -39,7 +39,7 @@ spring:
 rest:
   connection:
     max-per-route: 10
-    max-total: 20
+    max-total: 120
     timeout: 5000  # 밀리초 단위
   response:
     timeout: 10000  # 밀리초 단위

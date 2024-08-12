@@ -22,7 +22,7 @@ server:
 spring:
 ## 임시 테스트를 위한 datasource 생성
   datasource:
-    jdbc-url: "jdbc:oracle:thin:@172.30.1.17:1521/TESTDB"
+    jdbc-url: "jdbc:oracle:thin:@172.30.1.39:1521/TESTDB"
     username: "testuser"
     password: "new1234!"
     driver-class-name: oracle.jdbc.OracleDriver
@@ -33,6 +33,16 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+## 임시 테스트를 위한 resttemplate properties
+rest:
+  connection:
+    max-per-route: 30
+    max-total: 120
+    timeout: 3000
+  response:
+    timeout: 5000
+
 
 ## For connecting to Autonomous Database (ATP) refer https://www.oracle.com/database/technologies/getting-started-using-jdbc.html
 ## Provide the database URL, database username and database password (as shown in the example values)

@@ -53,10 +53,18 @@ spring:
     password: "new1234!"
     driver-class-name: oracle.jdbc.OracleDriver
     hikari:
-      maximum-pool-size: 5
+      maximum-pool-size: 150
       minimum-idle: 1
       idle-timeout: 30000
-     
+
+## 임시 테스트를 위한 resttemplate properties
+rest:
+  connection:
+    max-per-route: 30
+    max-total: 150
+    timeout: 3000
+  response:
+    timeout: 5000
 
 ## For connecting to Autonomous Database (ATP) refer https://www.oracle.com/database/technologies/getting-started-using-jdbc.html
 ## Provide the database URL, database username and database password (as shown in the example values)
@@ -74,7 +82,7 @@ departmentDataSource:
       connection-pool-name: connectionPoolName2
       initial-pool-size: 15
       min-pool-size: 10
-      max-pool-size: 30
+      max-pool-size: 150
       data-source-name: deptxadatasource
 
 departmentOneEndpoint: "http://172.30.1.17:9999"
