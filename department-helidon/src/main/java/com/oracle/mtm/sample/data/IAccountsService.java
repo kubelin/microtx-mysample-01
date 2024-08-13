@@ -20,7 +20,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 */
 package com.oracle.mtm.sample.data;
 
-import com.oracle.mtm.sample.entity.Account;
+import com.oracle.mtm.sample.entity.HelidonAccount;
 
 import java.sql.SQLException;
 
@@ -35,7 +35,7 @@ public interface IAccountsService {
      * @return Returns the account details associated with the account
      * @throws SQLException
      */
-    Account accountDetails(String accountId) throws SQLException;
+    HelidonAccount accountDetails(String accountId) throws SQLException;
 
     /**
      * Withdraw amount from an account

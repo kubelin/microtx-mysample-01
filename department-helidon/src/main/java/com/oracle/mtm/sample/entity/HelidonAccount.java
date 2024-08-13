@@ -26,7 +26,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * The Account Entity class.
  */
 @Schema(name = "Account")
-public class Account {
+public class HelidonAccount {
     @Schema(required = true, description = "Account identity")
     String accountId;
     @Schema(required = true, description = "Account name")
@@ -34,7 +34,7 @@ public class Account {
     @Schema(required = true, description = "Amount associated with the account")
     double amount;
 
-    public Account(String accountId, String name, double amount) {
+    public HelidonAccount(String accountId, String name, double amount) {
         this.accountId = accountId;
         this.name = name;
         this.amount = amount;

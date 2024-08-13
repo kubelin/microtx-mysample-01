@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oracle.mtm.sample.entity.Account;
+import com.oracle.mtm.sample.entity.HelidonAccount;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -40,7 +40,7 @@ import oracle.tmm.jta.common.TrmSQLConnection;
  * Service that connects to the accounts database and provides methods to interact with the accounts
  */
 @RequestScoped
-public class AccountsServiceImpl implements IAccountsService {
+public class AccountsService implements IAccountsService {
 
 	final static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -49,7 +49,8 @@ public class AccountsServiceImpl implements IAccountsService {
 	 * Use this connection object to execute SQLs (DMLs) within the application code.
 	 */
 	@Inject
-	@TrmSQLConnection private Connection connection;
+	@TrmSQLConnection
+	private Connection connection;
 
 	/**
 	 * Get account details persisted in the database
@@ -58,8 +59,8 @@ public class AccountsServiceImpl implements IAccountsService {
 	 * @throws SQLException
 	 */
 	@Override
-	public Account accountDetails(String accountId) throws SQLException {
-		Account account = null;
+	public HelidonAccount accountDetails(String accountId) throws SQLException {
+		HelidonAccount account = null;
 		PreparedStatement statement = null;
 		try {
 			if (connection == null) {
@@ -70,7 +71,7 @@ public class AccountsServiceImpl implements IAccountsService {
 			statement.setString(1, accountId);
 			ResultSet dataSet = statement.executeQuery();
 			if (dataSet.next()) {
-				account = new Account(dataSet.getString("account_id"), dataSet.getString("name"), dataSet.getDouble("amount"));
+				account = new HelidonAccount(dataSet.getString("account_id"), dataSet.getString("name"), dataSet.getDouble("amount"));
 			}
 		} catch (SQLException e) {
 			logger.error(e.getLocalizedMessage());

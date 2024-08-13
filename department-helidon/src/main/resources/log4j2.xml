@@ -34,7 +34,7 @@
         <Logger name="oracle.tmm" level="DEBUG" additivity="false">
             <AppenderRef ref="MicroTxLib"/>
         </Logger>
-        <Root level="info">
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

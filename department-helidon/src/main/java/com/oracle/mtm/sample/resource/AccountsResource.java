@@ -22,9 +22,9 @@ package com.oracle.mtm.sample.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oracle.mtm.sample.Configuration;
+import com.oracle.mtm.sample.HelidonConfiguration;
 import com.oracle.mtm.sample.data.IAccountsService;
-import com.oracle.mtm.sample.entity.Account;
+import com.oracle.mtm.sample.entity.HelidonAccount;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -50,7 +50,7 @@ public class AccountsResource {
     IAccountsService accountService;
 
     @Inject
-    Configuration config;
+    HelidonConfiguration config;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -72,7 +72,7 @@ public class AccountsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountDetails(@PathParam("accountId") String accountId) {
         try {
-            Account account = this.accountService.accountDetails(accountId);
+            HelidonAccount account = this.accountService.accountDetails(accountId);
             if(account == null) {
                 logger.error("Account not found: {}", accountId);
                 return Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity("No account found for the provided account Identity").build();
