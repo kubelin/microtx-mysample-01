@@ -10,6 +10,10 @@ This repository contains sample implementations for demonstrating and testing Mi
 
 2. **NON XA Sample**: A standalone example that illustrates the use of MicroTX AND NON-XA transactions.
 
+
+https://github.com/junoyoon/fastcampus-jenkins.git
+
+
 ## Purpose
 
 The primary goals of this repository are:
